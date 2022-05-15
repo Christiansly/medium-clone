@@ -1,4 +1,4 @@
-import {createImageUrlBuilder, createCurrentUserHook, createClient} from "node:async_hooks"
+import {createImageUrlBuilder, createCurrentUserHook, createClient} from "next-sanity"
 export const config = {
     /**
      * Find your project ID and dataset in `sanity.json` in your studio project.
@@ -19,3 +19,7 @@ export const config = {
   };
 
   export const sanityClient = createClient(config)
+
+  export const urlFor = (source) => createImageUrlBuilder(config).image(source)
+
+  export const useCurrentUser = createCurrentUserHook(config)
