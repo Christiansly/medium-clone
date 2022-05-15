@@ -3,13 +3,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import Header from '../components/Header'
-import {sanityClient, urlFor} from "../sanity"
+import { sanityClient, urlFor } from '../sanity'
 import { Post } from '../typings'
 interface Props {
   posts: [Post]
 }
 
-const Home = ({posts}: Props) => {
+const Home = ({ posts }: Props) => {
   console.log(posts)
   return (
     <div className="flex min-h-screen flex-col py-2">
@@ -39,10 +39,13 @@ const Home = ({posts}: Props) => {
         />
       </div>
       <div>
-        {posts.map((post) => {
+        {posts.map((post) => (
           <Link key={post._id} href={`/post/${post.slug.current}`}>
+            <div>
+              <img src={urlFor(post.mainImage).url()!} alt="" />
+            </div>
           </Link>
-        })}
+        ))}
       </div>
     </div>
   )
@@ -62,10 +65,10 @@ export const getServerSideProps = async () => {
       mainImage,
       slug
   }`
-  const posts = await sanityClient.fetch(query);
+  const posts = await sanityClient.fetch(query)
   return {
     props: {
       posts,
-    }
+    },
   }
 }
